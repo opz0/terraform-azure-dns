@@ -43,22 +43,10 @@ variable "private_dns_zone_name" {
   description = "The private dns zone to be created for internal vnet resolution"
 }
 
-variable "private_dns_zone_vnet_links" {
-  default     = []
-  type        = list(string)
-  description = "Virtual networks to create Private DNS virtual network links. This enables DNS resolution and registration using Azure Private DNS"
-}
-
 variable "resource_group_name" {
   type        = string
   default     = ""
   description = "The name of the resource group where the Azure DNS resides"
-}
-
-variable "tags" {
-  default     = null
-  type        = map(string)
-  description = "Tags to be passed to created instances"
 }
 
 variable "private_registration_enabled" {
