@@ -5,11 +5,10 @@ provider "azurerm" {
 locals {
   name        = "app"
   environment = "test"
-  label_order = ["name", "environment", ]
 }
 
 module "resource_group" {
-  source      = "git::git@github.com:opz0/terraform-azure-resource-group.git?ref=master"
+  source      = "git::https://github.com/opz0/terraform-azure-resource-group.git?ref=v1.0.0"
   name        = "app"
   environment = "tested"
   location    = "North Europe"
@@ -17,7 +16,7 @@ module "resource_group" {
 
 
 module "vnet" {
-  source              = "git::git@github.com:opz0/terraform-azure-vnet.git?ref=master"
+  source              = "git::https://github.com/opz0/terraform-azure-vnet.git?ref=v1.0.0"
   name                = "app"
   environment         = "test"
   resource_group_name = module.resource_group.resource_group_name
@@ -36,7 +35,7 @@ module "dns_zone" {
   private_registration_enabled = true
   private_dns                  = true
   private_dns_zone_name        = "webserver0000.com"
-  virtual_network_id           = module.vnet.vnet_id[0]
+  virtual_network_id           = module.vnet.id
   a_records = [{
     name    = "test"
     ttl     = 3600
