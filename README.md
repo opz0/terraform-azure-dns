@@ -24,7 +24,7 @@ for creating AZURE resources, and you can customize the inputs as needed. Below 
 ```hcl
 module "dns_zone" {
   depends_on                   = [module.resource_group, module.vnet]
-  source                       = "git::https://github.com/opz0/terraform-azure-dns.git?ref=v1.0.0"
+  source                       = "git::https://github.com/cypik/terraform-azure-dns.git?ref=v1.0.0"
   name                         = local.name
   environment                  = local.environment
   resource_group_name          = module.resource_group.resource_group_name
@@ -56,7 +56,6 @@ module "dns_zone" {
     records = ["ns1.example.com.", "ns2.example.com."]
   }]
 }
-
 ```
 This example demonstrates how to create various AZURE resources using the provided modules. Adjust the input values to suit your specific requirements.
 
@@ -80,10 +79,10 @@ This module provides the following outputs:
 - 'dns_zone_max_number_of_record_sets': Maximum number of Records in the zone.
 
 # Examples
-For detailed examples on how to use this module, please refer to the 'examples' directory within this repository.
+For detailed examples on how to use this module, please refer to the '[example](https://github.com/cypik/terraform-azure-dns/blob/master/_example)' directory within this repository.
 
 # License
-This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/opz0/terraform-azure-dns/blob/readme/LICENSE) file for more details.
+This Terraform module is provided under the '[License Name]' License. Please see the [LICENSE](https://github.com/cypik/terraform-azure-dns/blob/master/LICENSE) file for more details.
 
 # Author
 Your Name
