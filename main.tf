@@ -40,7 +40,7 @@ resource "azurerm_private_dns_zone" "private_dns_zone" {
   name                = var.private_dns_zone_name
   resource_group_name = var.resource_group_name
   dynamic "soa_record" {
-    for_each = var.soa_record_private_dns
+    for_each = var.soa_record
     content {
       email        = lookup(soa_record.value, "email", null)
       expire_time  = lookup(soa_record.value, "expire_time", null)
