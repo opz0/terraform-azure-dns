@@ -91,12 +91,6 @@ variable "soa_record" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details."
 }
 
-variable "soa_record_private_dns" {
-  type        = list(any)
-  default     = []
-  description = "Customize details about the root block device of the instance. See Block Devices below for details."
-}
-
 variable "a_records" {
   type        = any
   default     = []
