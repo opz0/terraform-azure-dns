@@ -17,17 +17,22 @@ variable "label_order" {
   description = "Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] ."
 }
 
-
 variable "managedby" {
   type        = string
-  default     = "Cypik"
-  description = "ManagedBy, eg 'cypik'."
+  default     = "info@cypik.com"
+  description = "ManagedBy, eg 'info@cypik.com'"
 }
 
 variable "repository" {
   type        = string
   default     = "https://github.com/cypik/terraform-azure-dns"
   description = "Terraform current module repo"
+}
+
+variable "extra_tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
 
 variable "dns_zone_names" {
@@ -54,20 +59,26 @@ variable "private_registration_enabled" {
   type        = bool
   description = "Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?"
 }
+
 variable "enabled" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
+  description = "Flag to enable or disable the resource. When set to true, the resource will be created."
 }
 
 variable "enabled_dns" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
+  description = "Flag to enable or disable DNS settings for the resource."
 }
 
 variable "private_dns" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
+  description = "Flag to specify whether private DNS should be enabled. When set to true, private DNS will be used."
 }
+
+
 variable "virtual_network_id" {
   type        = string
   default     = ""
@@ -80,6 +91,11 @@ variable "soa_record" {
   description = "Customize details about the root block device of the instance. See Block Devices below for details."
 }
 
+variable "soa_record_private_dns" {
+  type        = list(any)
+  default     = []
+  description = "Customize details about the root block device of the instance. See Block Devices below for details."
+}
 
 variable "a_records" {
   type        = any

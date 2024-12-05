@@ -1,12 +1,13 @@
 
 module "labels" {
   source      = "cypik/labels/azure"
-  version     = "1.0.1"
+  version     = "1.0.2"
   name        = var.name
   environment = var.environment
   managedby   = var.managedby
   label_order = var.label_order
   repository  = var.repository
+  extra_tags  = var.extra_tags
 }
 
 
@@ -14,12 +15,23 @@ resource "random_id" "this" {
   byte_length = "8"
 }
 
-
 resource "azurerm_dns_zone" "dns_zone" {
   count               = var.enabled && var.enabled_dns ? 1 : 0
   name                = var.dns_zone_names
   resource_group_name = var.resource_group_name
   tags                = module.labels.tags
+
+  dynamic "soa_record" {
+    for_each = var.soa_record
+    content {
+      email        = lookup(soa_record.value, "email", null)
+      expire_time  = lookup(soa_record.value, "expire_time", null)
+      minimum_ttl  = lookup(soa_record.value, "minimum_ttl", null)
+      refresh_time = lookup(soa_record.value, "refresh_time", null)
+      retry_time   = lookup(soa_record.value, "retry_time", null)
+      ttl          = lookup(soa_record.value, "ttl", null)
+    }
+  }
 
 }
 
@@ -28,7 +40,7 @@ resource "azurerm_private_dns_zone" "private_dns_zone" {
   name                = var.private_dns_zone_name
   resource_group_name = var.resource_group_name
   dynamic "soa_record" {
-    for_each = var.soa_record
+    for_each = var.soa_record_private_dns
     content {
       email        = lookup(soa_record.value, "email", null)
       expire_time  = lookup(soa_record.value, "expire_time", null)

@@ -24,7 +24,7 @@ for creating AZURE resources, and you can customize the inputs as needed. Below 
 module "dns_zone" {
   depends_on                   = [module.resource_group, module.vnet]
   source                       = "cypik/dns/azure"
-  version                      = "1.0.1"
+  version                      = "1.0.2"
   name                         = local.name
   environment                  = local.environment
   resource_group_name          = module.resource_group.resource_group_name
@@ -74,22 +74,22 @@ Replace **MIT** and **Cypik** with the appropriate license and your information.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.6 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=3.87.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.6.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.5 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.2.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >=3.87.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.6.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.2.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | >= 3.1.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/azure | 1.0.1 |
+| <a name="module_labels"></a> [labels](#module\_labels) | cypik/labels/azure | 1.0.2 |
 
 ## Resources
 
@@ -101,7 +101,7 @@ Replace **MIT** and **Cypik** with the appropriate license and your information.
 | [azurerm_dns_zone.dns_zone](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_zone) | resource |
 | [azurerm_private_dns_zone.private_dns_zone](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.private_dns_vnet_link](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [random_id.this](https://registry.terraform.io/providers/hashicorp/random/3.6.0/docs/resources/id) | resource |
+| [random_id.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 
 ## Inputs
 
@@ -110,19 +110,21 @@ Replace **MIT** and **Cypik** with the appropriate license and your information.
 | <a name="input_a_records"></a> [a\_records](#input\_a\_records) | List of a records to be added in azure dns zone. | `any` | `[]` | no |
 | <a name="input_cname_records"></a> [cname\_records](#input\_cname\_records) | List of cname records | `any` | `[]` | no |
 | <a name="input_dns_zone_names"></a> [dns\_zone\_names](#input\_dns\_zone\_names) | The public dns zone to be created for internal vnet resolution | `string` | `null` | no |
-| <a name="input_enabled"></a> [enabled](#input\_enabled) | n/a | `bool` | `true` | no |
-| <a name="input_enabled_dns"></a> [enabled\_dns](#input\_enabled\_dns) | n/a | `bool` | `true` | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Flag to enable or disable the resource. When set to true, the resource will be created. | `bool` | `true` | no |
+| <a name="input_enabled_dns"></a> [enabled\_dns](#input\_enabled\_dns) | Flag to enable or disable DNS settings for the resource. | `bool` | `true` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
+| <a name="input_extra_tags"></a> [extra\_tags](#input\_extra\_tags) | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(string)` | `{}` | no |
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] . | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
-| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'cypik'. | `string` | `"Cypik"` | no |
+| <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'info@cypik.com' | `string` | `"info@cypik.com"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
 | <a name="input_ns_records"></a> [ns\_records](#input\_ns\_records) | List of ns records | <pre>list(object({<br>    name    = string,      #(Required) The name of the DNS NS Record. Changing this forces a new resource to be created.<br>    ttl     = number,      # (Required) The Time To Live (TTL) of the DNS record in seconds.<br>    records = list(string) #(Required) A list of values that make up the NS record.<br>  }))</pre> | `[]` | no |
-| <a name="input_private_dns"></a> [private\_dns](#input\_private\_dns) | n/a | `bool` | `false` | no |
+| <a name="input_private_dns"></a> [private\_dns](#input\_private\_dns) | Flag to specify whether private DNS should be enabled. When set to true, private DNS will be used. | `bool` | `false` | no |
 | <a name="input_private_dns_zone_name"></a> [private\_dns\_zone\_name](#input\_private\_dns\_zone\_name) | The private dns zone to be created for internal vnet resolution | `string` | `null` | no |
 | <a name="input_private_registration_enabled"></a> [private\_registration\_enabled](#input\_private\_registration\_enabled) | Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled? | `bool` | `true` | no |
 | <a name="input_repository"></a> [repository](#input\_repository) | Terraform current module repo | `string` | `"https://github.com/cypik/terraform-azure-dns"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group where the Azure DNS resides | `string` | `""` | no |
 | <a name="input_soa_record"></a> [soa\_record](#input\_soa\_record) | Customize details about the root block device of the instance. See Block Devices below for details. | `list(any)` | `[]` | no |
+| <a name="input_soa_record_private_dns"></a> [soa\_record\_private\_dns](#input\_soa\_record\_private\_dns) | Customize details about the root block device of the instance. See Block Devices below for details. | `list(any)` | `[]` | no |
 | <a name="input_virtual_network_id"></a> [virtual\_network\_id](#input\_virtual\_network\_id) | The name of the virtual network | `string` | `""` | no |
 
 ## Outputs
